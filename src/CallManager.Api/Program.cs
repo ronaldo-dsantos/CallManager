@@ -1,4 +1,5 @@
 using CallManager.Application.Interfaces;
+using CallManager.Application.Services;
 using CallManager.Infrastructure.Data;
 using CallManager.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<CallManagerDbContext>(options =>
 
 builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
 builder.Services.AddScoped<IChamadoRepository, ChamadoRepository>();
+builder.Services.AddScoped<IColaboradorService, ColaboradorService>();
+builder.Services.AddScoped<IChamadoService, ChamadoService>();
 
 var app = builder.Build();
 
