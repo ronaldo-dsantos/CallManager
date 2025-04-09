@@ -34,17 +34,17 @@ namespace CallManager.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Adicionar([FromBody] ChamadoDto chamadoDto)
         {
-            await _chamadoService.AdicionarAsync(chamadoDto);
-            return CreatedAtAction(nameof(ObterPorId), new { id = chamadoDto.Id }, chamadoDto);
+            var chamado =  await _chamadoService.AdicionarAsync(chamadoDto);
+            return CreatedAtAction(nameof(ObterPorId), new { id = chamado.Id }, chamado);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Atualizar(int id, [FromBody] ChamadoDto chamadoDto)
+        public async Task<ActionResult> Atualizar(int id, [FromBody] ChamadoUpdateDto chamadoUpdateDto)
         {
-            if (id != chamadoDto.Id)
+            if (id != chamadoUpdateDto.Id)
                 return BadRequest("O ID informado não confere com o chamado.");
 
-            await _chamadoService.AtualizarAsync(chamadoDto);
+            await _chamadoService.AtualizarAsync(chamadoUpdateDto);
             return NoContent();
         }
 

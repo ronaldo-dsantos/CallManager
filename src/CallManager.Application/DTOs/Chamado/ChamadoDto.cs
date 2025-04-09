@@ -5,8 +5,6 @@ namespace CallManager.Api.DTOs.Chamado
 {
     public class ChamadoDto
     {
-        public int Id { get; set; }
-
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public int MatriculaColaborador { get; set; }
 

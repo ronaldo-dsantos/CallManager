@@ -7,8 +7,8 @@ namespace CallManager.Application.Interfaces
     {
         Task<IEnumerable<ChamadoReadDto>> ObterTodosAsync();
         Task<ChamadoReadDto> ObterPorIdAsync(int id);
-        Task AdicionarAsync(ChamadoDto chamadoDto);
-        Task AtualizarAsync(ChamadoDto chamadoDto);
+        Task<ChamadoReadDto> AdicionarAsync(ChamadoDto chamadoDto);
+        Task AtualizarAsync(ChamadoUpdateDto chamadoUpdateDto);
         Task RemoverAsync(int id);
     }
 }

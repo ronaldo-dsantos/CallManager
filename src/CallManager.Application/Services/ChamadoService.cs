@@ -32,16 +32,20 @@ namespace CallManager.Application.Services
             return _mapper.Map<ChamadoReadDto>(chamado);
         }
 
-        public async Task AdicionarAsync(ChamadoDto chamadoDto)
+        public async Task<ChamadoReadDto> AdicionarAsync(ChamadoDto chamadoDto)
         {
             var chamado = _mapper.Map<Chamado>(chamadoDto);
+
+            chamado.DataAbertura = DateTime.UtcNow;
 
             await _chamadoRepository.AdicionarAsync(chamado);
+
+            return _mapper.Map<ChamadoReadDto>(chamado);
         }            
 
-        public async Task AtualizarAsync(ChamadoDto chamadoDto)
+        public async Task AtualizarAsync(ChamadoUpdateDto chamadoUpdateDto)
         {
-            var chamado = _mapper.Map<Chamado>(chamadoDto);
+            var chamado = _mapper.Map<Chamado>(chamadoUpdateDto);
 
             await _chamadoRepository.AtualizarAsync(chamado);
         }            
