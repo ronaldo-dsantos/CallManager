@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CallManager.Api.DTOs.Chamado
 {
-    public class ChamadoCreateDto
+    public class ChamadoDto
     {
         [Key]
         public int Id { get; set; }

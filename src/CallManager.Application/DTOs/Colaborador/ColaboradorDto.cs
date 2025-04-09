@@ -2,10 +2,10 @@
 
 namespace CallManager.Api.DTOs.Colaborador
 {
-    public class ColaboradorCreateDto
+    public class ColaboradorDto
     {
         [Key]
-        [Range(1, 6)]
+        [Range(1, 999999)]
         public int Matricula { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]

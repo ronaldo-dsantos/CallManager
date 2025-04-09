@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CallManager.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/chamados")]
     public class ChamadosController : Controller
     {
         private readonly IChamadoService _chamadoService;

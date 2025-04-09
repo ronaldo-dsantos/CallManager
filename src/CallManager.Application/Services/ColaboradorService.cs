@@ -1,4 +1,6 @@
-﻿using CallManager.Application.Interfaces;
+﻿using AutoMapper;
+using CallManager.Api.DTOs.Colaborador;
+using CallManager.Application.Interfaces;
 using CallManager.Application.Models;
 
 namespace CallManager.Application.Services
@@ -6,23 +8,34 @@ namespace CallManager.Application.Services
     public class ColaboradorService : IColaboradorService
     {
         private readonly IColaboradorRepository _colaboradorRepository;
+        private readonly IMapper _mapper;
 
-        public ColaboradorService(IColaboradorRepository colaboradorRepository)
+        public ColaboradorService(IColaboradorRepository colaboradorRepository,
+                                  IMapper mapper)
         {
             _colaboradorRepository = colaboradorRepository;
+            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Colaborador>> ObterTodosAsync()
-            => await _colaboradorRepository.ObterTodosAsync();
+        public async Task<IEnumerable<ColaboradorDto>> ObterTodosAsync()
+            => _mapper.Map<IEnumerable<ColaboradorDto>>(await _colaboradorRepository.ObterTodosAsync());
 
-        public async Task<Colaborador> ObterPorMatriculaAsync(int matricula)
-            => await _colaboradorRepository.ObterPorIdAsync(matricula);
+        public async Task<ColaboradorDto> ObterPorMatriculaAsync(int matricula)
+            => _mapper.Map<ColaboradorDto>(await _colaboradorRepository.ObterPorIdAsync(matricula));
 
-        public async Task AdicionarAsync(Colaborador colaborador)
-            => await _colaboradorRepository.AdicionarAsync(colaborador);
+        public async Task AdicionarAsync(ColaboradorDto colaboradorDto)
+        {
+            var colaborador = _mapper.Map<Colaborador>(colaboradorDto);
 
-        public async Task AtualizarAsync(Colaborador colaborador)
-            => await _colaboradorRepository.AtualizarAsync(colaborador);
+            await _colaboradorRepository.AdicionarAsync(colaborador);
+        }            
+
+        public async Task AtualizarAsync(ColaboradorDto colaboradorDto)
+        {
+            var colaborador = _mapper.Map<Colaborador>(colaboradorDto);
+
+            await _colaboradorRepository.AtualizarAsync(colaborador);
+        }            
 
         public async Task RemoverAsync(int matricula)
             => await _colaboradorRepository.RemoverAsync(matricula);

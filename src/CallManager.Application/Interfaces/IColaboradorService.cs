@@ -1,13 +1,13 @@
-﻿using CallManager.Application.Models;
+﻿using CallManager.Api.DTOs.Colaborador;
 
 namespace CallManager.Application.Interfaces
 {
     public interface IColaboradorService
     {
-        Task<IEnumerable<Colaborador>> ObterTodosAsync();
-        Task<Colaborador> ObterPorMatriculaAsync(int matricula);
-        Task AdicionarAsync(Colaborador colaborador);
-        Task AtualizarAsync(Colaborador colaborador);
+        Task<IEnumerable<ColaboradorDto>> ObterTodosAsync();
+        Task<ColaboradorDto> ObterPorMatriculaAsync(int matricula);
+        Task AdicionarAsync(ColaboradorDto colaboradorDto);
+        Task AtualizarAsync(ColaboradorDto colaboradorDto);
         Task RemoverAsync(int matricula);
     }
 }

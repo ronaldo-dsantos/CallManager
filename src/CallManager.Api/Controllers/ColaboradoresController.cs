@@ -1,12 +1,12 @@
-﻿using CallManager.Application.Interfaces;
-using CallManager.Application.Models;
+﻿using CallManager.Api.DTOs.Colaborador;
+using CallManager.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CallManager.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class ColaboradoresController : ControllerBase
+    [Route("api/colaboradores")]
+    public class ColaboradoresController : MainController  
     {
         private readonly IColaboradorService _colaboradorService;
 
@@ -16,14 +16,14 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Colaborador>>> GetTodos()
+        public async Task<ActionResult<IEnumerable<ColaboradorDto>>> ObterTodos()
         {
             var colaboradores = await _colaboradorService.ObterTodosAsync();
             return Ok(colaboradores);
         }
 
         [HttpGet("{matricula:int}")]
-        public async Task<ActionResult<Colaborador>> GetPorMatricula(int matricula)
+        public async Task<ActionResult<ColaboradorDto>> ObterPorMatricula(int matricula)
         {
             var colaborador = await _colaboradorService.ObterPorMatriculaAsync(matricula);
             if (colaborador == null) return NotFound();
@@ -31,19 +31,19 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Colaborador colaborador)
+        public async Task<ActionResult> Adicionar([FromBody] ColaboradorDto colaboradorDto)
         {
-            await _colaboradorService.AdicionarAsync(colaborador);
-            return CreatedAtAction(nameof(GetPorMatricula), new { matricula = colaborador.Matricula }, colaborador);
+            await _colaboradorService.AdicionarAsync(colaboradorDto);
+            return CreatedAtAction(nameof(ObterPorMatricula), new { matricula = colaboradorDto.Matricula }, colaboradorDto);
         }
 
         [HttpPut("{matricula:int}")]
-        public async Task<ActionResult> Put(int matricula, [FromBody] Colaborador colaborador)
+        public async Task<ActionResult> Put(int matricula, [FromBody] ColaboradorDto colaboradorDto)
         {
-            if (matricula != colaborador.Matricula)
+            if (matricula != colaboradorDto.Matricula)
                 return BadRequest("Matrícula do colaborador não confere com a da rota.");
 
-            await _colaboradorService.AtualizarAsync(colaborador);
+            await _colaboradorService.AtualizarAsync(colaboradorDto);
             return NoContent();
         }
 
