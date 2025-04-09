@@ -38,7 +38,7 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPut("{matricula:int}")]
-        public async Task<ActionResult> Put(int matricula, [FromBody] ColaboradorDto colaboradorDto)
+        public async Task<ActionResult> Atualizar(int matricula, [FromBody] ColaboradorDto colaboradorDto)
         {
             if (matricula != colaboradorDto.Matricula)
                 return BadRequest("Matrícula do colaborador não confere com a da rota.");
@@ -48,7 +48,7 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpDelete("{matricula:int}")]
-        public async Task<ActionResult> Delete(int matricula)
+        public async Task<ActionResult> Remover(int matricula)
         {
             await _colaboradorService.RemoverAsync(matricula);
             return NoContent();

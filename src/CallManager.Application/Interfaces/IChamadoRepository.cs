@@ -4,6 +4,8 @@ namespace CallManager.Application.Interfaces
 {
     public interface IChamadoRepository : IRepository<Chamado>
     {
-        // Adicionar métodos específicos para o repositório de Chamado, se necessário.
+        Task<IEnumerable<Chamado>> ObterChamadosComColaboradorAsync();
+
+        Task<Chamado?> ObterChamadoComColaboradorPorIdAsync(int id);
     }
 }

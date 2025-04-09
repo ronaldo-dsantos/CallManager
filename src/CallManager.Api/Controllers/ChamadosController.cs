@@ -1,5 +1,6 @@
-﻿using CallManager.Application.Interfaces;
-using CallManager.Application.Models;
+﻿using CallManager.Api.DTOs.Chamado;
+using CallManager.Application.DTOs.Chamado;
+using CallManager.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CallManager.Api.Controllers
@@ -16,14 +17,14 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Chamado>>> GetTodos()
+        public async Task<ActionResult<IEnumerable<ChamadoReadDto>>> ObterTodos()
         {
             var chamados = await _chamadoService.ObterTodosAsync();
             return Ok(chamados);
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Chamado>> GetPorId(int id)
+        public async Task<ActionResult<ChamadoReadDto>> ObterPorId(int id)
         {
             var chamado = await _chamadoService.ObterPorIdAsync(id);
             if (chamado == null) return NotFound();
@@ -31,24 +32,24 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Chamado chamado)
+        public async Task<ActionResult> Adicionar([FromBody] ChamadoDto chamadoDto)
         {
-            await _chamadoService.AdicionarAsync(chamado);
-            return CreatedAtAction(nameof(GetPorId), new { id = chamado.Id }, chamado);
+            await _chamadoService.AdicionarAsync(chamadoDto);
+            return CreatedAtAction(nameof(ObterPorId), new { id = chamadoDto.Id }, chamadoDto);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, [FromBody] Chamado chamado)
+        public async Task<ActionResult> Atualizar(int id, [FromBody] ChamadoDto chamadoDto)
         {
-            if (id != chamado.Id)
+            if (id != chamadoDto.Id)
                 return BadRequest("O ID informado não confere com o chamado.");
 
-            await _chamadoService.AtualizarAsync(chamado);
+            await _chamadoService.AtualizarAsync(chamadoDto);
             return NoContent();
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Remover(int id)
         {
             await _chamadoService.RemoverAsync(id);
             return NoContent();
