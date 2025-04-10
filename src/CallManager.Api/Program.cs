@@ -1,8 +1,8 @@
 using CallManager.Application.Interfaces;
+using CallManager.Application.Notifications;
 using CallManager.Application.Services;
 using CallManager.Infrastructure.Data;
 using CallManager.Infrastructure.Repositories;
-
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,6 +25,7 @@ builder.Services.AddScoped<IColaboradorRepository, ColaboradorRepository>();
 builder.Services.AddScoped<IChamadoRepository, ChamadoRepository>();
 builder.Services.AddScoped<IColaboradorService, ColaboradorService>();
 builder.Services.AddScoped<IChamadoService, ChamadoService>();
+builder.Services.AddScoped<INotificador, Notificador>();
 
 var app = builder.Build();
 

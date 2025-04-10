@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CallManager.Application\CallManager.Application.csproj" />
+    <ProjectReference Include="..\CallManager.Infrastructure\CallManager.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
