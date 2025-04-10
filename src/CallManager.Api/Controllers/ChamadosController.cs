@@ -32,9 +32,9 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Adicionar([FromBody] ChamadoDto chamadoDto)
+        public async Task<ActionResult> Adicionar([FromBody] ChamadoCreateDto chamadoCreateDto)
         {
-            var chamado =  await _chamadoService.AdicionarAsync(chamadoDto);
+            var chamado =  await _chamadoService.AdicionarAsync(chamadoCreateDto);
             return CreatedAtAction(nameof(ObterPorId), new { id = chamado.Id }, chamado);
         }
 

@@ -2,11 +2,13 @@ using CallManager.Application.Interfaces;
 using CallManager.Application.Services;
 using CallManager.Infrastructure.Data;
 using CallManager.Infrastructure.Repositories;
+
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+    
 
 builder.Services.AddEndpointsApiExplorer();
 
