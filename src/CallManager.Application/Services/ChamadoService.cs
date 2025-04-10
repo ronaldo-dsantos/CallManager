@@ -36,10 +36,17 @@ namespace CallManager.Application.Services
 
         public async Task AdicionarAsync(ChamadoCreateDto chamadoCreateDto)
         {
+            if (!int.TryParse(chamadoCreateDto.MatriculaColaborador, out var matricula))
+            {
+                Notificar("A matrícula do colaborador deve ser numérica.");
+                return;
+            }
+
             var chamado = _mapper.Map<Chamado>(chamadoCreateDto);            
 
             if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
 
+            chamado.MatriculaColaborador = matricula;
             chamado.DataAbertura = DateTime.UtcNow;
 
             await _chamadoRepository.AdicionarAsync(chamado);            
@@ -51,10 +58,28 @@ namespace CallManager.Application.Services
 
             if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
 
+            var chamadoExistente = await _chamadoRepository.ObterPorIdAsync(chamado.Id);
+
+            if (chamadoExistente == null)
+            {
+                Notificar("Chamado não encontrado.");
+                return;
+            }
+
             await _chamadoRepository.AtualizarAsync(chamado);
-        }            
+        }
 
         public async Task RemoverAsync(int id)
-            => await _chamadoRepository.RemoverAsync(id);
+        {
+            var chamado = await _chamadoRepository.ObterPorIdAsync(id);
+
+            if (chamado == null)
+            {
+                Notificar("Chamado não encontrado.");
+                return;
+            }
+
+            await _chamadoRepository.RemoverAsync(id);
+        }
     }
 }

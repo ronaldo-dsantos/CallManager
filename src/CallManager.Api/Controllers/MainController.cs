@@ -20,22 +20,6 @@ namespace CallManager.Api.Controllers
             return !_notificador.TemNotificacao();
         }
 
-        protected void NotificarErro(string mensagem)
-        {
-            _notificador.Handle(new Notificacao(mensagem));
-        }
-
-        protected void NotificarErrosModelState(ModelStateDictionary modelState)
-        {
-            var erros = modelState.Values.SelectMany(v => v.Errors);
-
-            foreach (var erro in erros)
-            {
-                var mensagemErro = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
-                NotificarErro(mensagemErro);
-            }
-        }
-
         protected ActionResult CustomResponse(object? result = null)
         {
             if (OperacaoValida())
@@ -62,6 +46,22 @@ namespace CallManager.Api.Controllers
             }
 
             return CustomResponse();
+        }
+
+        protected void NotificarErrosModelState(ModelStateDictionary modelState)
+        {
+            var erros = modelState.Values.SelectMany(v => v.Errors);
+
+            foreach (var erro in erros)
+            {
+                var mensagemErro = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
+                NotificarErro(mensagemErro);
+            }
+        }
+
+        protected void NotificarErro(string mensagem)
+        {
+            _notificador.Handle(new Notificacao(mensagem));
         }
     }
 }

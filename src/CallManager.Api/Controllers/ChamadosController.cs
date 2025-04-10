@@ -21,7 +21,6 @@ namespace CallManager.Api.Controllers
         public async Task<ActionResult<IEnumerable<ChamadoReadDto>>> ObterTodos()
         {
             var chamados = await _chamadoService.ObterTodosAsync();
-
             return CustomResponse(chamados);
         }
 
@@ -30,7 +29,8 @@ namespace CallManager.Api.Controllers
         {
             var chamado = await _chamadoService.ObterPorIdAsync(id);
 
-            if (chamado == null) return NotFound();
+            if (chamado == null) 
+                return NotFound();
 
             return CustomResponse(chamado);
         }
@@ -38,10 +38,10 @@ namespace CallManager.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Adicionar(ChamadoCreateDto chamadoCreateDto)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid)
+                return CustomResponse(ModelState);
 
             await _chamadoService.AdicionarAsync(chamadoCreateDto);
-
             return CustomResponse(chamadoCreateDto);
         }
 
@@ -49,12 +49,15 @@ namespace CallManager.Api.Controllers
         public async Task<ActionResult> Atualizar(int id, ChamadoUpdateDto chamadoUpdateDto)
         {
             if (id != chamadoUpdateDto.Id)
-                return BadRequest("O ID informado não confere com o chamado.");
+            {
+                NotificarErro("O ID informado não confere com o ID do chamado.");
+                return CustomResponse();
+            }
 
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
+            if (!ModelState.IsValid)
+                return CustomResponse(ModelState);
 
             await _chamadoService.AtualizarAsync(chamadoUpdateDto);
-
             return CustomResponse(chamadoUpdateDto);
         }
 

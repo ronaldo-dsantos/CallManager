@@ -11,11 +11,20 @@ namespace CallManager.Api.Configuration
         public AutoMapperProfile()
         {
             CreateMap<Colaborador, ColaboradorDto>().ReverseMap();
-            CreateMap<Chamado, ChamadoCreateDto>().ReverseMap();
+
             CreateMap<Chamado, ChamadoUpdateDto>().ReverseMap();
 
             CreateMap<Chamado, ChamadoReadDto>()
                 .ForMember(dest => dest.Colaborador, opt => opt.MapFrom(src => src.Colaborador));
+
+            CreateMap<ChamadoCreateDto, Chamado>()
+                .ForMember(dest => dest.MatriculaColaborador, opt =>
+                    opt.MapFrom(src => ParseMatricula(src.MatriculaColaborador)));
+        }
+
+        private static int ParseMatricula(string? input)
+        {
+            return int.TryParse(input, out var matricula) ? matricula : 0;
         }
     }
 }
