@@ -1,13 +1,19 @@
 ﻿using CallManager.Application.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CallManager.Api.DTOs.Chamado
 {
     public class ChamadoCreateDto
-    {        
+    {
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [Range(100000, 999999)]
         public int MatriculaColaborador { get; set; }
-        
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public TipoSolicitacao TipoSolicitacao { get; set; }
-        
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [MaxLength(1000)]
         public string? Detalhes { get; set; }
     }
 }

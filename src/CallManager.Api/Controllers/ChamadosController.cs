@@ -7,11 +7,12 @@ namespace CallManager.Api.Controllers
 {
     [ApiController]
     [Route("api/chamados")]
-    public class ChamadosController : Controller
+    public class ChamadosController : MainController
     {
         private readonly IChamadoService _chamadoService;
 
-        public ChamadosController(IChamadoService chamadoService)
+        public ChamadosController(IChamadoService chamadoService,
+                                  INotificador notificador) : base(notificador)
         {
             _chamadoService = chamadoService;
         }
@@ -20,39 +21,48 @@ namespace CallManager.Api.Controllers
         public async Task<ActionResult<IEnumerable<ChamadoReadDto>>> ObterTodos()
         {
             var chamados = await _chamadoService.ObterTodosAsync();
-            return Ok(chamados);
+
+            return CustomResponse(chamados);
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<ChamadoReadDto>> ObterPorId(int id)
         {
             var chamado = await _chamadoService.ObterPorIdAsync(id);
+
             if (chamado == null) return NotFound();
-            return Ok(chamado);
+
+            return CustomResponse(chamado);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Adicionar([FromBody] ChamadoCreateDto chamadoCreateDto)
+        public async Task<ActionResult> Adicionar(ChamadoCreateDto chamadoCreateDto)
         {
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
             await _chamadoService.AdicionarAsync(chamadoCreateDto);
-            return Ok();
+
+            return CustomResponse(chamadoCreateDto);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Atualizar(int id, [FromBody] ChamadoUpdateDto chamadoUpdateDto)
+        public async Task<ActionResult> Atualizar(int id, ChamadoUpdateDto chamadoUpdateDto)
         {
             if (id != chamadoUpdateDto.Id)
                 return BadRequest("O ID informado não confere com o chamado.");
 
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
+
             await _chamadoService.AtualizarAsync(chamadoUpdateDto);
-            return NoContent();
+
+            return CustomResponse(chamadoUpdateDto);
         }
 
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Remover(int id)
         {
             await _chamadoService.RemoverAsync(id);
-            return NoContent();
+            return CustomResponse();
         }
     }
 }

@@ -10,7 +10,8 @@ namespace CallManager.Api.Controllers
     {
         private readonly IColaboradorService _colaboradorService;
 
-        public ColaboradoresController(IColaboradorService colaboradorService)
+        public ColaboradoresController(IColaboradorService colaboradorService, 
+                                       INotificador notificador) : base(notificador)
         {
             _colaboradorService = colaboradorService;
         }
