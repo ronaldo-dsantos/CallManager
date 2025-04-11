@@ -10,13 +10,16 @@ namespace CallManager.Application.Services
     public class ChamadoService : BaseService, IChamadoService
     {
         private readonly IChamadoRepository _chamadoRepository;
+        private readonly IColaboradorRepository _colaboradorRepository;
         private readonly IMapper _mapper;
 
         public ChamadoService(IChamadoRepository chamadoRepository,
+                              IColaboradorRepository colaboradorRepository,
                               IMapper mapper,
                               INotificador notificador) : base(notificador)
         {
             _chamadoRepository = chamadoRepository;
+            _colaboradorRepository = colaboradorRepository;
             _mapper = mapper;
         }
 
@@ -42,29 +45,36 @@ namespace CallManager.Application.Services
                 return;
             }
 
-            var chamado = _mapper.Map<Chamado>(chamadoCreateDto);            
+            var chamado = _mapper.Map<Chamado>(chamadoCreateDto);
+
+            chamado.DataAbertura = DateTime.UtcNow;
 
             if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
 
-            chamado.MatriculaColaborador = matricula;
-            chamado.DataAbertura = DateTime.UtcNow;
+            var colaboradorExiste = await _colaboradorRepository.ObterPorIdAsync(chamado.MatriculaColaborador);
+
+            if (colaboradorExiste == null)
+            {
+                Notificar("O colaborador informado não existe");
+                return;
+            }
 
             await _chamadoRepository.AdicionarAsync(chamado);            
         }            
 
         public async Task AtualizarAsync(ChamadoUpdateDto chamadoUpdateDto)
         {
-            var chamado = _mapper.Map<Chamado>(chamadoUpdateDto);
-
-            if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
-
-            var chamadoExistente = await _chamadoRepository.ObterPorIdAsync(chamado.Id);
+            var chamadoExistente = await _chamadoRepository.ObterPorIdAsync(chamadoUpdateDto.Id);
 
             if (chamadoExistente == null)
             {
-                Notificar("Chamado não encontrado.");
+                Notificar("O chamado informado não existe.");
                 return;
             }
+
+            var chamado = _mapper.Map<Chamado>(chamadoUpdateDto);
+
+            if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
 
             await _chamadoRepository.AtualizarAsync(chamado);
         }
@@ -75,7 +85,7 @@ namespace CallManager.Application.Services
 
             if (chamado == null)
             {
-                Notificar("Chamado não encontrado.");
+                Notificar("O chamado informado não foi encontrado.");
                 return;
             }
 

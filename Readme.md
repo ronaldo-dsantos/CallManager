@@ -27,7 +27,7 @@
 
 - `API` – Endpoints, configurações, middlewares
 - `Application` – Entidades, enums, regras de negócio, serviços, DTOs, validações
-- `Infra` – Persistência de dados e repositórios
+- `Infrastructure` – Persistência de dados e repositórios
 
 ## 📌 Status do Projeto
 
