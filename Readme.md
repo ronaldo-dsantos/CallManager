@@ -1,4 +1,3 @@
-```markdown
 # CallManager 📞
 
 **CallManager** é uma API REST desenvolvida com ASP.NET Core que tem como objetivo gerenciar chamados internos de um setor de planejamento. A aplicação permite o cadastro, consulta, atualização e remoção de chamados, com controle de permissões entre gestores e analistas.
@@ -63,4 +62,3 @@ Este projeto está sendo versionado com commits representando cada etapa do dese
 
 Ronaldo Domingues  
 [LinkedIn](https://www.linkedin.com/in/ronaldo-domingues/) | [GitHub](https://github.com/ronaldo-dsantos)
-```
