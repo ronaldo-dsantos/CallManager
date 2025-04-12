@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CallManager.Api.DTOs.Chamado;
 using CallManager.Application.DTOs.Chamado;
+using CallManager.Application.Enums;
 using CallManager.Application.Interfaces;
 using CallManager.Application.Models;
 using CallManager.Application.Validators;
@@ -39,17 +40,11 @@ namespace CallManager.Application.Services
 
         public async Task AdicionarAsync(ChamadoCreateDto chamadoCreateDto)
         {
-            if (!int.TryParse(chamadoCreateDto.MatriculaColaborador, out var matricula))
-            {
-                Notificar("A matrícula do colaborador deve ser numérica.");
-                return;
-            }
-
-            var chamado = _mapper.Map<Chamado>(chamadoCreateDto);
-
-            chamado.DataAbertura = DateTime.UtcNow;
+            var chamado = _mapper.Map<Chamado>(chamadoCreateDto);            
 
             if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
+
+            chamado.DataAbertura = DateTime.UtcNow;
 
             var colaboradorExiste = await _colaboradorRepository.ObterPorIdAsync(chamado.MatriculaColaborador);
 
@@ -64,15 +59,27 @@ namespace CallManager.Application.Services
 
         public async Task AtualizarAsync(ChamadoUpdateDto chamadoUpdateDto)
         {
-            var chamadoExistente = await _chamadoRepository.ObterPorIdAsync(chamadoUpdateDto.Id);
+            var chamado = await _chamadoRepository.ObterPorIdAsync(chamadoUpdateDto.Id);
 
-            if (chamadoExistente == null)
+            if (chamado is null)
             {
                 Notificar("O chamado informado não existe.");
                 return;
             }
 
-            var chamado = _mapper.Map<Chamado>(chamadoUpdateDto);
+            if (chamado.Status == StatusChamado.Concluido)
+            {
+                Notificar("Chamados já concluídos não podem ser alterados.");
+                return;
+            }
+
+            chamado.Detalhes = chamadoUpdateDto.Detalhes;
+            chamado.Status = chamadoUpdateDto.Status;
+
+            if (chamado.Status == StatusChamado.Concluido)
+            {
+                chamado.DataConclusao = DateTime.UtcNow;
+            }
 
             if (!ExecutarValidacao(new ChamadoValidator(), chamado)) return;
 

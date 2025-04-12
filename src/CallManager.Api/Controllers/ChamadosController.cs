@@ -40,21 +40,23 @@ namespace CallManager.Api.Controllers
             if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _chamadoService.AdicionarAsync(chamadoCreateDto);
+
             return CustomResponse(chamadoCreateDto);
         }
 
         [HttpPut("{id:int}")]
         public async Task<ActionResult> Atualizar(int id, ChamadoUpdateDto chamadoUpdateDto)
         {
-            if (!ModelState.IsValid) return CustomResponse(ModelState);
-
             if (id != chamadoUpdateDto.Id)
             {
                 NotificarErro("O ID informado na URL não corresponde ao ID do chamado.");
-                return CustomResponse();
-            }            
+                return CustomResponse(chamadoUpdateDto);
+            }
+
+            if (!ModelState.IsValid) return CustomResponse(ModelState);
 
             await _chamadoService.AtualizarAsync(chamadoUpdateDto);
+
             return CustomResponse(chamadoUpdateDto);
         }
 
@@ -62,6 +64,7 @@ namespace CallManager.Api.Controllers
         public async Task<ActionResult> Remover(int id)
         {
             await _chamadoService.RemoverAsync(id);
+
             return CustomResponse();
         }
     }

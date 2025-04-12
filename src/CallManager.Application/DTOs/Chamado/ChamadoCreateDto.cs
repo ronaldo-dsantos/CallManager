@@ -6,8 +6,8 @@ namespace CallManager.Api.DTOs.Chamado
     public class ChamadoCreateDto
     {
         [Required(ErrorMessage = "A matrícula do colaborador é obrigatória")]
-        [RegularExpression(@"^\d{6}$", ErrorMessage = "A matrícula do colaborador deve ser numérica e conter 6 dígitos")]
-        public string? MatriculaColaborador { get; set; }
+        [Range(1, 999999, ErrorMessage = "A matrícula deve ter de 1 a 6 dígitos")]
+        public int MatriculaColaborador { get; set; }
 
         [Required(ErrorMessage = "O tipo de solicitação é obrigatório")]
         [EnumDataType(typeof(TipoSolicitacao), ErrorMessage = "O tipo de solicitação é inválido")]        
