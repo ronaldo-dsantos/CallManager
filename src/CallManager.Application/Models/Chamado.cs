@@ -2,23 +2,21 @@
 
 namespace CallManager.Application.Models
 {
-    public class Chamado
+    public class Chamado : Entity
     {
-        public int Id { get; set; }
-
-        public int MatriculaColaborador { get; set; }   
+        public int MatriculaColaborador { get; set; }
+        public Colaborador? Colaborador { get; set; }
 
         public TipoSolicitacao TipoSolicitacao { get; set; }
-
-        public string? Detalhes { get; set; }
-
         public StatusChamado Status { get; set; } = StatusChamado.Aberto;
 
+        public string? DetalhesSolicitacao { get; set; }
+        public string? DetalhesTratativa { get; set; }
+
+        public string? AbertoPor { get; set; }
         public DateTime DataAbertura { get; set; } = DateTime.UtcNow;
 
+        public string? ConcluidoPor { get; set; }
         public DateTime? DataConclusao { get; set; }
-
-        // Relacionamento com o colaborador
-        public Colaborador? Colaborador { get; set; } 
     }
 }
