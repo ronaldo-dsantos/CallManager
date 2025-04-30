@@ -20,7 +20,7 @@ namespace CallManager.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Chamado?> ObterChamadoComColaboradorPorIdAsync(int id)
+        public async Task<Chamado?> ObterChamadoComColaboradorPorIdAsync(Guid id)
         {
             return await _context.Chamados
                 .Include(c => c.Colaborador)

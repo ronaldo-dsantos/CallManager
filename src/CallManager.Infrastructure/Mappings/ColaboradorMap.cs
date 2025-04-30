@@ -28,7 +28,7 @@ namespace CallManager.Infrastructure.Mappings
                      .IsRequired()
                      .HasMaxLength(50);
 
-            builder.Property(c => c.Bandeira)
+            builder.Property(c => c.Setor)
                         .IsRequired()
                         .HasMaxLength(50);
 
@@ -38,7 +38,7 @@ namespace CallManager.Infrastructure.Mappings
 
             builder.HasMany(c => c.Chamados)
                    .WithOne(c => c.Colaborador)
-                   .HasForeignKey(c => c.MatriculaColaborador);
+                   .HasForeignKey(c => c.ColaboradorId);
         }
     }
 }

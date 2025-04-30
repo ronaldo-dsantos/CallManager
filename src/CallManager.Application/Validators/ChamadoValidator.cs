@@ -7,14 +7,14 @@ namespace CallManager.Application.Validators
     {
         public ChamadoValidator()
         {
-            RuleFor(c => c.MatriculaColaborador)
-                .NotEmpty().WithMessage("A matrícula do colaborador é obrigatória.")
-                .InclusiveBetween(1, 999999).WithMessage("A matrícula deve ter de 1 a 6 dígitos.");
+            RuleFor(c => c.ColaboradorId)
+                .NotEmpty().WithMessage("O campo Id do Colaborador é obrigatório.")
+                .NotEqual(Guid.Empty).WithMessage("O campo Id do Colaborador não pode ser vazio.");
 
             RuleFor(c => c.TipoSolicitacao)
                 .IsInEnum().WithMessage("O tipo de solicitação informado é inválido.");
 
-            RuleFor(c => c.Detalhes)
+            RuleFor(c => c.DetalhesSolicitacao)
                 .NotEmpty().WithMessage("O campo Detalhes é obrigatório.")
                 .MaximumLength(1000).WithMessage("O campo Detalhes deve ter no máximo 1000 caracteres.");
 

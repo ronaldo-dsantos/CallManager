@@ -6,6 +6,6 @@ namespace CallManager.Application.Interfaces
     {
         Task<IEnumerable<Chamado>> ObterChamadosComColaboradorAsync();
 
-        Task<Chamado?> ObterChamadoComColaboradorPorIdAsync(int id);
+        Task<Chamado?> ObterChamadoComColaboradorPorIdAsync(Guid id);
     }
 }

@@ -31,7 +31,7 @@ namespace CallManager.Application.Services
             return _mapper.Map<IEnumerable<ChamadoReadDto>>(chamados);
         }                   
 
-        public async Task<ChamadoReadDto> ObterPorIdAsync(int id)
+        public async Task<ChamadoReadDto> ObterPorIdAsync(Guid id)
         {
             var chamado = await _chamadoRepository.ObterChamadoComColaboradorPorIdAsync(id);
             
@@ -46,7 +46,7 @@ namespace CallManager.Application.Services
 
             chamado.DataAbertura = DateTime.UtcNow;
 
-            var colaboradorExiste = await _colaboradorRepository.ObterPorIdAsync(chamado.MatriculaColaborador);
+            var colaboradorExiste = await _colaboradorRepository.ObterPorIdAsync(chamado.ColaboradorId);
 
             if (colaboradorExiste == null)
             {
@@ -73,7 +73,7 @@ namespace CallManager.Application.Services
                 return;
             }
 
-            chamado.Detalhes = chamadoUpdateDto.Detalhes;
+            chamado.DetalhesTratativa = chamadoUpdateDto.DetalhesTratativa;
             chamado.Status = chamadoUpdateDto.Status;
 
             if (chamado.Status == StatusChamado.Concluido)
@@ -86,7 +86,7 @@ namespace CallManager.Application.Services
             await _chamadoRepository.AtualizarAsync(chamado);
         }
 
-        public async Task RemoverAsync(int id)
+        public async Task RemoverAsync(Guid id)
         {
             var chamado = await _chamadoRepository.ObterPorIdAsync(id);
 

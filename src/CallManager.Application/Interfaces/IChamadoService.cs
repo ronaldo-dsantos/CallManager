@@ -6,9 +6,9 @@ namespace CallManager.Application.Interfaces
     public interface IChamadoService
     {
         Task<IEnumerable<ChamadoReadDto>> ObterTodosAsync();
-        Task<ChamadoReadDto> ObterPorIdAsync(int id);
+        Task<ChamadoReadDto> ObterPorIdAsync(Guid id);
         Task AdicionarAsync(ChamadoCreateDto chamadoCreateDto);
         Task AtualizarAsync(ChamadoUpdateDto chamadoUpdateDto);
-        Task RemoverAsync(int id);
+        Task RemoverAsync(Guid id);
     }
 }

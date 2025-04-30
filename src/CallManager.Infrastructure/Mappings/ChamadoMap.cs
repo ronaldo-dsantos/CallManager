@@ -12,13 +12,13 @@ namespace CallManager.Infrastructure.Mappings
 
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.MatriculaColaborador)
+            builder.Property(c => c.ColaboradorId)
                    .IsRequired();
 
             builder.Property(c => c.TipoSolicitacao)
                    .IsRequired();
 
-            builder.Property(c => c.Detalhes)
+            builder.Property(c => c.DetalhesSolicitacao)
                    .IsRequired()
                    .HasMaxLength(1000);
 

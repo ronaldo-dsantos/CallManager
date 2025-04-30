@@ -10,11 +10,11 @@ namespace CallManager.Api.DTOs.Chamado
         public int MatriculaColaborador { get; set; }
 
         [Required(ErrorMessage = "O tipo de solicitação é obrigatório")]
-        [EnumDataType(typeof(TipoSolicitacao), ErrorMessage = "O tipo de solicitação é inválido")]        
+        [EnumDataType(typeof(TipoSolicitacao), ErrorMessage = "O tipo de solicitação é inválido")]
         public TipoSolicitacao TipoSolicitacao { get; set; }
 
-        [Required(ErrorMessage = "O campo detalhes é obrigatório")]
-        [StringLength(1000, ErrorMessage = "O campo detalhes deve ter no máximo 1000 caracteres")]        
-        public string? Detalhes { get; set; }
+        [Required(ErrorMessage = "O campo Detalhes da Solicitação é obrigatório")]
+        [StringLength(1000, ErrorMessage = "O campo Detalhes da Solicitação deve ter no máximo 1000 caracteres")]
+        public string DetalhesSolicitacao { get; set; } = string.Empty;
     }
 }
