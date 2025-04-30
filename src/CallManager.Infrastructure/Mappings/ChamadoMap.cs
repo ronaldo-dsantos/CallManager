@@ -12,21 +12,32 @@ namespace CallManager.Infrastructure.Mappings
 
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.ColaboradorId)
-                   .IsRequired();
-
             builder.Property(c => c.TipoSolicitacao)
                    .IsRequired();
+
+            builder.Property(c => c.Status)
+                    .IsRequired();
 
             builder.Property(c => c.DetalhesSolicitacao)
                    .IsRequired()
                    .HasMaxLength(1000);
 
-            builder.Property(c => c.Status)
-                   .IsRequired();
+            builder.Property(c => c.DetalhesTratativa)
+                   .HasMaxLength(1000);
+
+            builder.Property(c => c.AbertoPor)
+                   .HasMaxLength(100);
+
+            builder.Property(c => c.ConcluidoPor)
+                   .HasMaxLength(100);
 
             builder.Property(c => c.DataAbertura)
                    .IsRequired();
+
+            builder.HasOne(c => c.Colaborador)
+                   .WithMany(c => c.Chamados)
+                   .HasForeignKey(c => c.ColaboradorId)
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }    
 }

@@ -11,7 +11,7 @@ namespace CallManager.Application.Models
         public StatusChamado Status { get; set; } = StatusChamado.Aberto;
 
         public string DetalhesSolicitacao { get; set; } = string.Empty;
-        public string DetalhesTratativa { get; set; } = string.Empty;
+        public string? DetalhesTratativa { get; set; }
 
         public string AbertoPor { get; set; } = string.Empty;
         public DateTime DataAbertura { get; set; } = DateTime.UtcNow;

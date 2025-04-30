@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CallManager.Infrastructure.Migrations
 {
     [DbContext(typeof(CallManagerDbContext))]
-    [Migration("20250405024211_InitialCreate")]
+    [Migration("20250430045522_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,11 +27,21 @@ namespace CallManager.Infrastructure.Migrations
 
             modelBuilder.Entity("CallManager.Application.Models.Chamado", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("AbertoPor")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<Guid>("ColaboradorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ConcluidoPor")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("DataAbertura")
                         .HasColumnType("datetime2");
@@ -39,13 +49,14 @@ namespace CallManager.Infrastructure.Migrations
                     b.Property<DateTime?>("DataConclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Detalhes")
+                    b.Property<string>("DetalhesSolicitacao")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("MatriculaColaborador")
-                        .HasColumnType("int");
+                    b.Property<string>("DetalhesTratativa")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -55,20 +66,16 @@ namespace CallManager.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MatriculaColaborador");
+                    b.HasIndex("ColaboradorId");
 
                     b.ToTable("Chamados", (string)null);
                 });
 
             modelBuilder.Entity("CallManager.Application.Models.Colaborador", b =>
                 {
-                    b.Property<int>("Matricula")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Bandeira")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Cargo")
                         .IsRequired()
@@ -80,17 +87,25 @@ namespace CallManager.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("Matricula")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Setor")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Turno")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Matricula");
+                    b.HasKey("Id");
 
                     b.ToTable("Colaboradores", (string)null);
                 });
@@ -99,8 +114,8 @@ namespace CallManager.Infrastructure.Migrations
                 {
                     b.HasOne("CallManager.Application.Models.Colaborador", "Colaborador")
                         .WithMany("Chamados")
-                        .HasForeignKey("MatriculaColaborador")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("ColaboradorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Colaborador");
