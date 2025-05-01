@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using CallManager.Api.DTOs.Chamado;
-using CallManager.Api.DTOs.Colaborador;
 using CallManager.Application.DTOs.Chamado;
+using CallManager.Application.DTOs.Colaborador;
 using CallManager.Application.Models;
 
 namespace CallManager.Api.Configuration

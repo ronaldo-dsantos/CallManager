@@ -2,9 +2,11 @@
 
 namespace CallManager.Application.Models
 {
-    public class Chamado : Entity
+    public class Chamado
     {
-        public Guid ColaboradorId { get; set; }
+        public int Id { get; set; }
+
+        public int MatriculaColaborador { get; set; }
         public Colaborador Colaborador { get; set; } = null!;
 
         public TipoChamado Tipo { get; set; }

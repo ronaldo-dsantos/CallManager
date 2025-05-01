@@ -1,4 +1,4 @@
-﻿using CallManager.Api.DTOs.Colaborador;
+﻿using CallManager.Application.DTOs.Colaborador;
 using CallManager.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,14 +32,14 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Adicionar([FromBody] ColaboradorDto colaboradorDto)
+        public async Task<ActionResult> Adicionar(ColaboradorDto colaboradorDto)
         {
             await _colaboradorService.AdicionarAsync(colaboradorDto);
             return CreatedAtAction(nameof(ObterPorMatricula), new { matricula = colaboradorDto.Matricula }, colaboradorDto);
         }
 
         [HttpPut("{matricula:int}")]
-        public async Task<ActionResult> Atualizar(int matricula, [FromBody] ColaboradorDto colaboradorDto)
+        public async Task<ActionResult> Atualizar(int matricula, ColaboradorDto colaboradorDto)
         {
             if (matricula != colaboradorDto.Matricula)
                 return BadRequest("Matrícula do colaborador não confere com a da rota.");

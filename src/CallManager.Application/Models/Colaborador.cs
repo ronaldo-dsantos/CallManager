@@ -1,6 +1,6 @@
 ﻿namespace CallManager.Application.Models
 {
-    public class Colaborador : Entity
+    public class Colaborador
     {
         public int Matricula { get; set; }
         public string Nome { get; set; } = string.Empty;

@@ -49,9 +49,8 @@ namespace CallManager.Infrastructure.Repositories
 
         public virtual async Task<bool> ExisteAsync(object id)
         {
-            return await _dbSet
-                .AsNoTracking()
-                .AnyAsync(e => EF.Property<int>(e, "Id") == (int)id);
+            var entidade = await _dbSet.FindAsync(id);
+            return entidade != null;
         }
     }
 }

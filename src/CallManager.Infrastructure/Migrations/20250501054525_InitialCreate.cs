@@ -15,29 +15,29 @@ namespace CallManager.Infrastructure.Migrations
                 name: "Colaboradores",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Matricula = table.Column<int>(type: "int", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Gestor = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Cargo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Cargo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Setor = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Turno = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Colaboradores", x => x.Id);
+                    table.PrimaryKey("PK_Colaboradores", x => x.Matricula);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Chamados",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ColaboradorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TipoSolicitacao = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MatriculaColaborador = table.Column<int>(type: "int", nullable: false),
+                    Tipo = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    DetalhesSolicitacao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    DetalhesTratativa = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    Descricao = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Tratativa = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
                     AbertoPor = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DataAbertura = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ConcluidoPor = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -47,17 +47,17 @@ namespace CallManager.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Chamados", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chamados_Colaboradores_ColaboradorId",
-                        column: x => x.ColaboradorId,
+                        name: "FK_Chamados_Colaboradores_MatriculaColaborador",
+                        column: x => x.MatriculaColaborador,
                         principalTable: "Colaboradores",
-                        principalColumn: "Id",
+                        principalColumn: "Matricula",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chamados_ColaboradorId",
+                name: "IX_Chamados_MatriculaColaborador",
                 table: "Chamados",
-                column: "ColaboradorId");
+                column: "MatriculaColaborador");
         }
 
         /// <inheritdoc />

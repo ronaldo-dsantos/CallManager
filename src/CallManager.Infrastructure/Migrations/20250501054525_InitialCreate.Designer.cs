@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CallManager.Infrastructure.Migrations
 {
     [DbContext(typeof(CallManagerDbContext))]
-    [Migration("20250430045522_InitialCreate")]
+    [Migration("20250501054525_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -27,17 +27,16 @@ namespace CallManager.Infrastructure.Migrations
 
             modelBuilder.Entity("CallManager.Application.Models.Chamado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AbertoPor")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<Guid>("ColaboradorId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcluidoPor")
                         .HasMaxLength(100)
@@ -49,46 +48,45 @@ namespace CallManager.Infrastructure.Migrations
                     b.Property<DateTime?>("DataConclusao")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DetalhesSolicitacao")
+                    b.Property<string>("Descricao")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<string>("DetalhesTratativa")
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<int>("MatriculaColaborador")
+                        .HasColumnType("int");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TipoSolicitacao")
+                    b.Property<int>("Tipo")
                         .HasColumnType("int");
+
+                    b.Property<string>("Tratativa")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColaboradorId");
+                    b.HasIndex("MatriculaColaborador");
 
                     b.ToTable("Chamados", (string)null);
                 });
 
             modelBuilder.Entity("CallManager.Application.Models.Colaborador", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Matricula")
+                        .HasColumnType("int");
 
                     b.Property<string>("Cargo")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Gestor")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Matricula")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -105,7 +103,7 @@ namespace CallManager.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Matricula");
 
                     b.ToTable("Colaboradores", (string)null);
                 });
@@ -114,7 +112,7 @@ namespace CallManager.Infrastructure.Migrations
                 {
                     b.HasOne("CallManager.Application.Models.Colaborador", "Colaborador")
                         .WithMany("Chamados")
-                        .HasForeignKey("ColaboradorId")
+                        .HasForeignKey("MatriculaColaborador")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

@@ -12,11 +12,17 @@ namespace CallManager.Infrastructure.Mappings
 
             builder.HasKey(c => c.Id);
 
+            builder.Property(c => c.Id)
+                   .ValueGeneratedOnAdd();
+
+            builder.Property(c => c.MatriculaColaborador)
+                   .IsRequired();
+
             builder.Property(c => c.Tipo)
                    .IsRequired();
 
             builder.Property(c => c.Status)
-                   .IsRequired(); ;
+                   .IsRequired();
 
             builder.Property(c => c.Descricao)
                    .IsRequired()
@@ -35,8 +41,8 @@ namespace CallManager.Infrastructure.Mappings
                    .HasMaxLength(100);
 
             builder.HasOne(c => c.Colaborador)
-                   .WithMany(col => col.Chamados)
-                   .HasForeignKey(c => c.ColaboradorId)
+                   .WithMany(c => c.Chamados)
+                   .HasForeignKey(c => c.MatriculaColaborador)
                    .OnDelete(DeleteBehavior.Restrict);
         }
     }    

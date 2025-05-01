@@ -10,10 +10,11 @@ namespace CallManager.Infrastructure.Mappings
         {
             builder.ToTable("Colaboradores");
 
-            builder.HasKey(c => c.Id);
+            builder.HasKey(c => c.Matricula);
 
             builder.Property(c => c.Matricula)
-                   .IsRequired(); 
+                   .IsRequired()
+                   .ValueGeneratedNever();
 
             builder.Property(c => c.Nome)
                    .IsRequired()
@@ -36,9 +37,9 @@ namespace CallManager.Infrastructure.Mappings
                    .HasMaxLength(50);
 
             builder.HasMany(c => c.Chamados)
-                   .WithOne(c => c.Colaborador)
-                   .HasForeignKey(c => c.ColaboradorId)
-                   .OnDelete(DeleteBehavior.Restrict);
+                .WithOne(c => c.Colaborador)
+                .HasForeignKey(c => c.MatriculaColaborador)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

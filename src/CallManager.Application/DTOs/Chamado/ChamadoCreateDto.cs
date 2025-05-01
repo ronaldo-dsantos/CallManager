@@ -1,7 +1,7 @@
 ﻿using CallManager.Application.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace CallManager.Api.DTOs.Chamado
+namespace CallManager.Application.DTOs.Chamado
 {
     public class ChamadoCreateDto
     {

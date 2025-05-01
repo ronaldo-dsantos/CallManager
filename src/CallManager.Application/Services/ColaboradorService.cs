@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CallManager.Api.DTOs.Colaborador;
+using CallManager.Application.DTOs.Colaborador;
 using CallManager.Application.Interfaces;
 using CallManager.Application.Models;
 

@@ -1,12 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CallManager.Api.DTOs.Colaborador
+namespace CallManager.Application.DTOs.Colaborador
 {
     public class ColaboradorDto
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Range(1, 999999, ErrorMessage = "A matrícula deve conter entre 1 e 6 dígitos")]
         public int Matricula { get; set; }
 

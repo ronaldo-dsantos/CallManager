@@ -1,5 +1,4 @@
-﻿using CallManager.Api.DTOs.Chamado;
-using CallManager.Application.DTOs.Chamado;
+﻿using CallManager.Application.DTOs.Chamado;
 using CallManager.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +24,7 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ChamadoReadDto>> ObterPorId(Guid id)
+        public async Task<ActionResult<ChamadoReadDto>> ObterPorId(int id)
         {
             var chamado = await _chamadoService.ObterPorIdAsync(id);
 
@@ -45,7 +44,7 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Atualizar(Guid id, ChamadoUpdateDto chamadoUpdateDto)
+        public async Task<ActionResult> Atualizar(int id, ChamadoUpdateDto chamadoUpdateDto)
         {
             if (id != chamadoUpdateDto.Id)
             {
@@ -61,7 +60,7 @@ namespace CallManager.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult> Remover(Guid id)
+        public async Task<ActionResult> Remover(int id)
         {
             await _chamadoService.RemoverAsync(id);
 

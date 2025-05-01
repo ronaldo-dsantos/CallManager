@@ -1,11 +1,11 @@
-﻿using CallManager.Api.DTOs.Colaborador;
+﻿using CallManager.Application.DTOs.Colaborador;
 using CallManager.Application.Enums;
 
 namespace CallManager.Application.DTOs.Chamado
 {
     public class ChamadoReadDto
     {
-        public Guid Id { get; set; }  
+        public int Id { get; set; }  
         public ColaboradorDto? Colaborador { get; set; }
 
         public TipoChamado Tipo { get; set; }

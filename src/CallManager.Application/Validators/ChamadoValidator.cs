@@ -7,9 +7,9 @@ namespace CallManager.Application.Validators
     {
         public ChamadoValidator()
         {
-            RuleFor(c => c.ColaboradorId)
-                .NotEmpty().WithMessage("O campo Id do Colaborador é obrigatório.")
-                .NotEqual(Guid.Empty).WithMessage("O campo Id do Colaborador não pode ser vazio.");
+            RuleFor(c => c.MatriculaColaborador)
+                .NotEmpty().WithMessage("A matrícula do colaborador é obrigatória.")
+                .InclusiveBetween(1, 999999).WithMessage("A matrícula deve ter de 1 a 6 dígitos.");
 
             RuleFor(c => c.Tipo)
                 .IsInEnum().WithMessage("O tipo do chamado informado é inválido.");

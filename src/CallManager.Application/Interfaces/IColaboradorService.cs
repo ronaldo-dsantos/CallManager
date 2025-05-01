@@ -1,4 +1,4 @@
-﻿using CallManager.Api.DTOs.Colaborador;
+﻿using CallManager.Application.DTOs.Colaborador;
 
 namespace CallManager.Application.Interfaces
 {
