@@ -73,7 +73,7 @@ namespace CallManager.Application.Services
                 return;
             }
 
-            chamado.DetalhesTratativa = chamadoUpdateDto.DetalhesTratativa;
+            chamado.Tratativa = chamadoUpdateDto.Tratativa;
             chamado.Status = chamadoUpdateDto.Status;
 
             if (chamado.Status == StatusChamado.Concluido)

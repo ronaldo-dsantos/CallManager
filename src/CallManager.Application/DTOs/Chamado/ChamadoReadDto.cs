@@ -8,11 +8,11 @@ namespace CallManager.Application.DTOs.Chamado
         public Guid Id { get; set; }  
         public ColaboradorDto? Colaborador { get; set; }
 
-        public TipoSolicitacao TipoSolicitacao { get; set; }
-        public StatusChamado Status { get; set; } = StatusChamado.Aberto;
+        public TipoChamado Tipo { get; set; }
+        public StatusChamado Status { get; set; }
 
-        public string DetalhesSolicitacao { get; set; } = string.Empty;
-        public string DetalhesTratativa { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
+        public string? Tratativa { get; set; }
 
         public string AbertoPor { get; set; } = string.Empty;
         public DateTime DataAbertura { get; set; } = DateTime.UtcNow;

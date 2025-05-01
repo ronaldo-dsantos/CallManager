@@ -1,7 +1,7 @@
 ﻿
 namespace CallManager.Application.Enums
 {
-    public enum TipoSolicitacao
+    public enum TipoChamado
     {
         MudancaDeTurno = 1,        
         MudancaDeHierarquia,

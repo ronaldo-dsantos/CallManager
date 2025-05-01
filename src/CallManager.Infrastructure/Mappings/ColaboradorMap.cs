@@ -20,25 +20,25 @@ namespace CallManager.Infrastructure.Mappings
                    .HasMaxLength(100);
 
             builder.Property(c => c.Gestor)
-                     .IsRequired()
-                     .HasMaxLength(100);
+                   .IsRequired()
+                   .HasMaxLength(100);
 
             builder.Property(c => c.Cargo)
-                     .IsRequired()
-                     .HasMaxLength(50);
+                   .IsRequired()
+                   .HasMaxLength(100);
 
             builder.Property(c => c.Setor)
-                        .IsRequired()
-                        .HasMaxLength(50);
+                   .IsRequired()
+                   .HasMaxLength(50);
 
             builder.Property(c => c.Turno)
-                        .IsRequired()
-                        .HasMaxLength(50);
+                   .IsRequired()
+                   .HasMaxLength(50);
 
             builder.HasMany(c => c.Chamados)
                    .WithOne(c => c.Colaborador)
                    .HasForeignKey(c => c.ColaboradorId)
-                   .OnDelete(DeleteBehavior.Cascade); 
+                   .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
