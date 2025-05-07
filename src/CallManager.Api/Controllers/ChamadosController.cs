@@ -20,6 +20,7 @@ namespace CallManager.Api.Controllers
         public async Task<ActionResult<IEnumerable<ChamadoReadDto>>> ObterTodos()
         {
             var chamados = await _chamadoService.ObterTodosAsync();
+
             return CustomResponse(chamados);
         }
 
