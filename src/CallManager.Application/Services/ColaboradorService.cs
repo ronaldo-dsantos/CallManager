@@ -5,13 +5,14 @@ using CallManager.Application.Models;
 
 namespace CallManager.Application.Services
 {
-    public class ColaboradorService : IColaboradorService
+    public class ColaboradorService : BaseService, IColaboradorService
     {
         private readonly IColaboradorRepository _colaboradorRepository;
         private readonly IMapper _mapper;
 
         public ColaboradorService(IColaboradorRepository colaboradorRepository,
-                                  IMapper mapper)
+                                  IMapper mapper,
+                                  INotificador notificador) : base(notificador)
         {
             _colaboradorRepository = colaboradorRepository;
             _mapper = mapper;
@@ -35,9 +36,11 @@ namespace CallManager.Application.Services
             var colaborador = _mapper.Map<Colaborador>(colaboradorDto);
 
             await _colaboradorRepository.AtualizarAsync(colaborador);
-        }            
+        }
 
         public async Task RemoverAsync(int matricula)
-            => await _colaboradorRepository.RemoverAsync(matricula);
+        {
+            await _colaboradorRepository.RemoverAsync(matricula);
+        }
     }
 }

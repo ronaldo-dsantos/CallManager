@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CallManager.Infrastructure.Migrations
 {
     [DbContext(typeof(CallManagerDbContext))]
-    [Migration("20250501054525_InitialCreate")]
+    [Migration("20250507025243_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -113,7 +113,7 @@ namespace CallManager.Infrastructure.Migrations
                     b.HasOne("CallManager.Application.Models.Colaborador", "Colaborador")
                         .WithMany("Chamados")
                         .HasForeignKey("MatriculaColaborador")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Colaborador");

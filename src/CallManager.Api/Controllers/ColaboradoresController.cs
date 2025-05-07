@@ -1,6 +1,5 @@
 ﻿using CallManager.Application.DTOs.Colaborador;
 using CallManager.Application.Interfaces;
-using CallManager.Application.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CallManager.Api.Controllers
@@ -63,9 +62,13 @@ namespace CallManager.Api.Controllers
         [HttpDelete("{matricula:int}")]
         public async Task<ActionResult> Remover(int matricula)
         {
+            var colaborador = await _colaboradorService.ObterPorMatriculaAsync(matricula);
+
+            if (colaborador == null) return NotFound();
+
             await _colaboradorService.RemoverAsync(matricula);
 
-            return CustomResponse();
+            return CustomResponse(colaborador);
         }
     }
 }

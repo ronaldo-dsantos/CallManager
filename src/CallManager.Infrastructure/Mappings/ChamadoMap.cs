@@ -43,7 +43,7 @@ namespace CallManager.Infrastructure.Mappings
             builder.HasOne(c => c.Colaborador)
                    .WithMany(c => c.Chamados)
                    .HasForeignKey(c => c.MatriculaColaborador)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }    
 }

@@ -63,9 +63,13 @@ namespace CallManager.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Remover(int id)
         {
+            var chamado = await _chamadoService.ObterPorIdAsync(id);
+
+            if (chamado == null) return NotFound();
+
             await _chamadoService.RemoverAsync(id);
 
-            return CustomResponse();
+            return CustomResponse(chamado);
         }
     }
 }

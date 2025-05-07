@@ -87,14 +87,6 @@ namespace CallManager.Application.Services
 
         public async Task RemoverAsync(int id)
         {
-            var chamado = await _chamadoRepository.ObterPorIdAsync(id);
-
-            if (chamado == null)
-            {
-                Notificar("O chamado informado não foi encontrado.");
-                return;
-            }
-
             await _chamadoRepository.RemoverAsync(id);
         }
     }

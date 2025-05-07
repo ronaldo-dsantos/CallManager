@@ -110,7 +110,7 @@ namespace CallManager.Infrastructure.Migrations
                     b.HasOne("CallManager.Application.Models.Colaborador", "Colaborador")
                         .WithMany("Chamados")
                         .HasForeignKey("MatriculaColaborador")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Colaborador");

@@ -51,7 +51,7 @@ namespace CallManager.Infrastructure.Migrations
                         column: x => x.MatriculaColaborador,
                         principalTable: "Colaboradores",
                         principalColumn: "Matricula",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
